@@ -2,9 +2,11 @@ package com.example.Store;
 
 import java.util.Map;
 
+import com.example.Store.Basket;
+
 public interface MarketService {
-    void add(Integer productIdentifier,Integer quantity);
-
-    Map<Integer, Integer> getBasket();
-
+    Basket getBasket();
+    Map<Integer,Integer> getBasketContents();
+    void addProductToBasket(int... id);
 }
+

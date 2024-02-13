@@ -3,38 +3,31 @@ package com.example.Store;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 @SessionScope
 public class Basket {
-    private Integer productIdentifier;
-    private Integer quantity;
 
-    public Basket(Integer productIdentifier, Integer quantity) {
-        this.productIdentifier = productIdentifier;
-        this.quantity = quantity;
+    private Map<Integer, Integer> contents = new HashMap<>();
+        public Map<Integer, Integer> getContents() {
+            return Collections.unmodifiableMap(contents);
+        }
+
+        public void add(int id) {
+            if (contents.containsKey(id)) {
+                contents.put(id, contents.get(id) + 1);
+            } else {
+                contents.put(id, 1);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Cart" + "contents" + contents;
+        }
     }
 
-    public Integer getProductIdentifier() {
-        return productIdentifier;
-    }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setProductIdentifier(Integer productIdentifier) {
-        this.productIdentifier = productIdentifier;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "Basket{" +
-                "productIdentifier=" + productIdentifier +
-                ", quantity=" + quantity +
-                '}';
-    }
-}

@@ -4,25 +4,33 @@ import com.example.Store.Basket;
 import com.example.Store.MarketService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class MarketServiceImpl implements MarketService {
-    public Map<Integer, Integer> basketMap;
-    public MarketServiceImpl() {
-        this.basketMap = new HashMap<>();
+    private Basket basket;
+    public MarketServiceImpl(Basket basket) {
+        this.basket = basket;
+    }
+
+
+    @Override
+    public Basket getBasket() {
+        return basket;
     }
 
     @Override
-    public void add(Integer productIdentifier, Integer quantity) {
-        Basket basket = new Basket(productIdentifier, quantity);
-        basketMap.put(basket.getProductIdentifier(), basket.getQuantity());
+    public Map<Integer, Integer> getBasketContents() {
+        return basket.getContents();
     }
 
     @Override
-    public Map<Integer, Integer> getBasket() {
-        return Collections.unmodifiableMap(basketMap);
+    public void addProductToBasket(int... ids) {
+        Arrays.stream(ids).forEach(id->basket.add(id));
+
     }
 }
+
